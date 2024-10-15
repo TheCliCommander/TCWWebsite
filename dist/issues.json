@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "title": "Issue #1",
+        "articles": [
+            "The Labor History of the Missouri Capitol Building",
+            "The Democratic Shift to Harris: A Tactical Shift",
+            "Organize for Power: Form a Mass Service Workers Union",
+            "A System Rigged Against Us",
+            "The Non-Partisan Exploitation of the Working Class"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Issue #2",
+        "articles": [
+            "A Legacy of Blood and Stone",
+            "The Working Class Betrayed",
+            "Playing with Fire: How Big Bro is Pushing Us to the Brink",
+            "The Power of Solidarity",
+            "Unions, Dues, and the Power of Community Councils"
+        ]
+    }
+]

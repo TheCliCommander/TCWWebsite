@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "express": "^4.21.0",
+    "swiper": "^11.1.14",
+    "vue": "^3.2.0",
+    "vue-router": "^4.4.5"
+  },
+  "scripts": {
+    "build": "vue-cli-service build",
+    "start": "node src/server.js",
+    "serve": "vue-cli-service serve --port 8080"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.8"
+  }
+}
