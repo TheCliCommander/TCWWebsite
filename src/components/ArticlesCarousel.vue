@@ -1,84 +1,95 @@
 <template>
-    <div class="articles">
-        <ArticlesCarousel :issues="issues" @issue-selected="openDropdown" />
-        <ArticleDropdown 
-            :issue="selectedIssue" 
-            :visible="dropdownVisible" 
-            @close="closeDropdown" 
-        />
-        <div class="articles-list">
-            <div 
-                v-for="article in selectedIssue ? selectedIssue.articles : []" 
-                :key="article.id"  
-                :id="`article-${article.id}`" 
-                class="article-item"
-            >
-                <div class="fade-text" :style="{ opacity: textOpacity }" v-html="article.title"></div>
-                <div 
-                    class="fade-text" 
-                    :style="{ opacity: textOpacity }" 
-                    v-if="article.content" 
-                    v-html="article.content"
-                ></div>
-            </div>
-        </div>
+    <div class="articles-carousel">
+      <h4>Select an issue for a list of its articles. Click an article to read it in full!</h4>
+      <div class="carousel">
+        <button 
+          v-for="issue in issues" 
+          :key="issue.id" 
+          class="carousel-item"
+          @click="selectIssue(issue)"
+        >
+          {{ issue.title }}
+        </button>
+      </div>
+      <ArticleDropdown 
+        :issue="selectedIssue" 
+        :visible="dropdownVisible" 
+        @close="closeDropdown" 
+        @article-selected="openArticle"
+      />
+      <ArticleScrollBox 
+        :article="selectedArticle" 
+        :visible="scrollBoxVisible" 
+        @close="closeScrollBox"
+      />
     </div>
-</template>
-
-<script>
-import { defineComponent, ref, onMounted } from 'vue';
-import ArticlesCarousel from '../components/ArticlesCarousel.vue';
-import ArticleDropdown from '../components/ArticleDropdown.vue';
-
-export default defineComponent({
+  </template>
+  
+  <script>
+  import { defineComponent, ref } from 'vue';
+  import ArticleDropdown from './ArticleDropdown.vue';
+  import ArticleScrollBox from './ArticleScrollBox.vue';
+  
+  export default defineComponent({
+    name: 'ArticlesCarousel',
     components: {
-        ArticlesCarousel,
-        ArticleDropdown
+      ArticleDropdown,
+      ArticleScrollBox
     },
-    data() {
-        return {
-            issues: [],
-            selectedIssue: null,
-            dropdownVisible: false,
-            textOpacity: 1
-        };
+    props: {
+      issues: {
+        type: Array,
+        required: true
+      }
     },
-    methods: {
-        openDropdown(issue) {
-            this.selectedIssue = issue;
-            this.dropdownVisible = true;
-        },
-        closeDropdown() {
-            this.dropdownVisible = false;
-        }
-    },
-    mounted() {
-        fetch('/issues.json')
+    setup(props) {
+      const selectedIssue = ref(null);
+      const dropdownVisible = ref(false);
+      const selectedArticle = ref({ title: '', content: '' });
+      const scrollBoxVisible = ref(false);
+  
+      const selectIssue = (issue) => {
+        selectedIssue.value = issue;
+        dropdownVisible.value = true;
+      };
+  
+      const closeDropdown = () => {
+        dropdownVisible.value = false;
+      };
+  
+      const openArticle = (articleTitle) => {
+        // Fetch or set the article content based on the title
+        console.log('opeArticle called with title', articleTitle);
+        fetch('/articles.json')
             .then(response => response.json())
             .then(data => {
-                this.issues = data;
+                console.log('Fetched articles: ', data);
+                const article = data.find(a => a.title.includes(articleTitle));
+                if (article) {
+                    console.log('Article found: ', article);
+                    selectedArticle.value = article;
+                    scrollBoxVisible.value = true;
+                } else {
+                    console.log('Article not found: ', articleTitle);
+                }
             })
-            .catch(error => console.error('Error fetching issues:', error));
+            .catch(error => console.error('Error fetching articles:', error));
+      };
+  
+      const closeScrollBox = () => {
+        scrollBoxVisible.value = false;
+      };
+  
+      return {
+        selectedIssue,
+        dropdownVisible,
+        selectedArticle,
+        scrollBoxVisible,
+        selectIssue,
+        closeDropdown,
+        openArticle,
+        closeScrollBox
+      };
     }
-});
-</script>
-
-<style>
-.articles {
-    padding: 60px;
-}
-.articles-list {
-    margin-top: 60px; /* Adjusted for better spacing */
-}
-.article-item {
-    margin: 0;
-    margin-bottom: 15px; /* Space between articles */
-    padding: 10px;
-    background-color: rgba(244, 241, 233, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.article-item p {
-    transition: max-height 0.3s ease; /* Smooth transition for height change */
-}
-</style>
+  });
+  </script>

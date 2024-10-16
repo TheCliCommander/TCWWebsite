@@ -1,7 +1,7 @@
 <template>
     <div class="articles">
         
-        <ArticlesCarousel />
+        <ArticlesCarousel :issues="issues" />
         <div class="articles-list">
             <div v-for="article in articles" :key="article.id"  :id="`article-${article.id}`" class="article-item">
                 <div class="fade-text" :style="{ opacity: textOpacity }">v-html="article.title"></div>
@@ -61,6 +61,7 @@ export default defineComponent({
     background-color: rgba(244, 241, 233);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: red;
 }
 .article-item p {
     transition: max-height 0.3s ease; /* Smooth transition for height change */
