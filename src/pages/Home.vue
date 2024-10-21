@@ -3,7 +3,7 @@
     <Header />
       <main>
         <div class="container">
-        <h2 v-html="homeContent.title"></h2>
+        <h2 class="three-d-title" v-html="homeContent.title"></h2>
         <p v-html="homeContent.content"></p>
         </div>
       </main>
@@ -42,11 +42,34 @@ export default defineComponent({
 
 <style>
 .container {
-  padding: 20px;
+  padding: 5px;
   background-color: rgba(245, 245, 245, 0.8);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(155, 153, 153, 0.1);
   margin: 20px;
-  margin-top: 55px;
+  margin-top: 50px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%), /* Gradient overlay */
+    url('@/assets/images/capitolConstruction.png'); /* Background image */
+  background-size: auto;
+  background-position: right center;
+  background-repeat: no-repeat;
+   
 }
+
+.three-d-title {
+  font-size: 3em;
+  color: #ab1c03;
+  text-shadow: 2px 2px 0 #242423,
+               4px 4px 0 #8d9b83,
+               6px 6px 0 #c0392b;
+  transform: perspective(500px) rotateX(10deg) rotateY(10deg); /*3D rotation*/
+  transform: transform 0.3s ease; /*Smooth transition*/
+               
+}
+
+.three-d-title:hover {
+  transform: perspective(500px) rotateX(0deg) rotateY(0deg);/*reset on hover*/
+}
+
 </style>

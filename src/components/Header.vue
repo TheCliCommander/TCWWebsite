@@ -2,9 +2,9 @@
     <header>
       <div class="header-content">
         <div class="left">
-          <button @click="toggleMenu" class="menu-button" aria-label="Toggle navigation menu">
+          <button @click.stop="toggleMenu" class="menu-button" aria-label="Toggle navigation menu">
             <!-- Hamburger icon SVG -->
-            <svg width="24" height="24" viewBox="0 0 24 24">
+            <svg width="48" height="48" viewBox="0 0 24 24">
               <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </button>
@@ -32,14 +32,28 @@
   </template>
   
   <script>
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
   export default defineComponent({
     name: 'Header',
     setup() {
       const isMenuOpen = ref(false);
       const toggleMenu = () => {
+        console.log('Menu toggled')//debug step
         isMenuOpen.value = !isMenuOpen.value;
       };
+
+      const handleClickOutside = (event) => {
+        const menu = document.querySelector('.nav-menu');
+        if (menu && !menu.contains(event.target) && isMenuOpen.value) {
+          isMenuOpen.value = false;
+        }
+      };
+      onMounted( () => {
+        document.addEventListener('click', handleClickOutside);
+      });
+      onBeforeUnmount( () => {
+        document.removeEventListener('click', handleClickOutside);
+      });
       return { isMenuOpen, toggleMenu };
     }
   });
@@ -57,6 +71,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 100;
     border-radius: 10px; /* Maintained border-radius */
+    font-size: 1.75em;
   }
   
   .header-content {
@@ -66,6 +81,7 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+  
   }
   
   .left, .center, .right {
@@ -88,7 +104,7 @@
   
   .title {
     color: #f6f8fe; /* Preserved desired text color */
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
   }
   
@@ -141,12 +157,12 @@
     }
   
     .title {
-      font-size: 1.2em;
+      font-size: 2.2em;
     }
   
     .menu-button svg {
-      width: 20px;
-      height: 20px;
+      width: 80px;
+      height: 80px;
     }
   }
   </style>
