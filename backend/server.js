@@ -52,6 +52,8 @@ const formSchema = new mongoose.Schema({
 
 const FormSubmission = mongoose.model('FormSubmission', formSchema);
 
+app.use(express.static(path.join(__dirname, '../public')));
+
 // Handle form submission with validation and save to MongoDB
 app.post('/submit-form',
   [

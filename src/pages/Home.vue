@@ -1,12 +1,12 @@
 <template>
   <div>
     <Header />
-      <main>
-        <div class="container">
+    <main>
+      <div class="container">
         <h2 class="three-d-title" v-html="homeContent.title"></h2>
         <p v-html="homeContent.content"></p>
-        </div>
-      </main>
+      </div>
+    </main>
     <Footer />
   </div>
 </template>
@@ -49,12 +49,11 @@ export default defineComponent({
   margin: 20px;
   margin-top: 50px;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%), /* Gradient overlay */
-    url('@/assets/images/capitolConstruction.png'); /* Background image */
+    linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%),
+    url('@/assets/images/capitolConstruction.png');
   background-size: auto;
   background-position: right center;
   background-repeat: no-repeat;
-   
 }
 
 .three-d-title {
@@ -63,13 +62,11 @@ export default defineComponent({
   text-shadow: 2px 2px 0 #242423,
                4px 4px 0 #8d9b83,
                6px 6px 0 #c0392b;
-  transform: perspective(500px) rotateX(10deg) rotateY(10deg); /*3D rotation*/
-  transform: transform 0.3s ease; /*Smooth transition*/
-               
+  transform: perspective(500px) rotateX(10deg) rotateY(10deg);
+  transition: transform 0.3s ease;
 }
 
 .three-d-title:hover {
-  transform: perspective(500px) rotateX(0deg) rotateY(0deg);/*reset on hover*/
+  transform: perspective(500px) rotateX(0deg) rotateY(0deg);
 }
-
 </style>

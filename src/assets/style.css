@@ -33,12 +33,7 @@ main {
 
 
 h1, h2, h3 {
-    color: #ab1c03; /* charcoal headings */
-}
-
-a {
-    color: #ab1c03; /*deep red for links */
-    text-decoration: none; /* no underline */
+    color: #ab1c03; /* deep reeadings */
 }
 
 a:hover {

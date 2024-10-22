@@ -1,20 +1,14 @@
 <template>
     <div class="articles">
-        
         <ArticlesCarousel :issues="issues" />
-        <div class="articles-list">
-            <div v-for="article in articles" :key="article.id"  :id="`article-${article.id}`" class="article-item">
-                <div class="fade-text" :style="{ opacity: textOpacity }">v-html="article.title"></div>
-                <div class="fade-text" :style="{ opacity: textOpacity }" v-if="article.content" v-html="article.content"></div>
-            </div>
-        </div>
     </div>
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
+import { defineComponent } from 'vue';
 import ArticlesCarousel from '../components/ArticlesCarousel.vue';
 import ArticleDropdown from '../components/ArticleDropdown.vue';
+
 export default defineComponent({
     components: {
         ArticlesCarousel,
@@ -23,6 +17,7 @@ export default defineComponent({
     data() {
         return {
             issues: [],
+            articles: [], // Added articles array
             selectedIssue: null,
             dropdownVisible: false,
         }
@@ -37,12 +32,23 @@ export default defineComponent({
         }
     },
     mounted() {
+        // Fetch issues
         fetch('/issues.json')
             .then(response => response.json())
             .then(data => {
-                this.issues = data;
+                console.log('Fetched issues:', data);
+                this.issues = data; // Assign to issues
             })
             .catch(error => console.error('Error fetching issues:', error));
+
+        // Fetch articles
+        fetch('/articles.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched articles:', data);
+                this.articles = data; // Assign to articles
+            })
+            .catch(error => console.error('Error fetching articles:', error));
     }
 });
 </script>
@@ -54,7 +60,6 @@ export default defineComponent({
 }
 .articles-list {
     margin-top: 600; /* space between carousel and articles */
-
 }
 
 .carousel {

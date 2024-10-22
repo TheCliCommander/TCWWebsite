@@ -66,7 +66,7 @@ export default defineComponent({
   margin-top: 55px;
   color: red; /* Ensuring text color matches the site's theme */
   font-family: 'Montserrat', sans-serif;
-  background-image: url('@/assets/images/AboutBackground.jpeg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

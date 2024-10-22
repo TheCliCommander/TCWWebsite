@@ -25,6 +25,7 @@
             <li><router-link to="/articles" @click="isMenuOpen = false">Articles</router-link></li>
             <li><router-link to="/podcasts" @click="isMenuOpen = false">Podcasts</router-link></li>
             <li><router-link to="/contact" @click="isMenuOpen = false">Contact</router-link></li>
+            <li><router-link to="/tools-guides" @click="isMenuOpen = false">Tools & Guides</router-link></li>
           </ul>
         </nav>
       </div>
@@ -118,7 +119,7 @@
   .nav-menu {
     display: none;
     width: max-content;
-    background-color: hsla(0, 0%, 20%, 0.8); /* Semi-transparent background */
+    background-color: hsla(0, 0%, 20%, 0.95); /* Semi-transparent background */
     border-radius: 10px;
     position: absolute;
     top: 100%;
@@ -139,6 +140,7 @@
   .nav-menu ul li {
     padding: 10px 0;
     text-align: center;
+    color: yellow !important;
   }
   
   /* Adjust the hamburger icon color on hover */
