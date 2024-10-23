@@ -119,7 +119,7 @@
   .nav-menu {
     display: none;
     width: max-content;
-    background-color: hsla(0, 0%, 20%, 0.95); /* Semi-transparent background */
+    background-color: hsla(0, 0%, 20%, 0.85); /* Semi-transparent background */
     border-radius: 10px;
     position: absolute;
     top: 100%;
@@ -137,10 +137,10 @@
     margin: 0;
   }
   
-  .nav-menu ul li {
+  .nav-menu ul li a{
     padding: 10px 0;
     text-align: center;
-    color: yellow !important;
+    color: yellow;
   }
   
   /* Adjust the hamburger icon color on hover */
