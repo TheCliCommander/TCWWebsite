@@ -4,9 +4,11 @@ const bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const xss = require('xss-clean');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit'); // Import rateLimit
+const rateLimit = require('express-rate-limit');
 
 const app = express();
+
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(xss());
@@ -15,8 +17,9 @@ app.use(helmet());
 // Rate limiting middleware
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 500 // limit each IP to 100 requests per windowMs
 });
+app.use(limiter);
 
 // Serve static files from the dist directory
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -33,7 +36,6 @@ app.post('/submit-form',
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
     const { name, email, message } = req.body;
     console.log('Form data received:', { name, email, message });
     res.send('Form submission received');
