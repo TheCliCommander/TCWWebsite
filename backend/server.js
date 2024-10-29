@@ -6,20 +6,25 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const xss = require('xss-clean');
-const mongoose = require('mongoose'); // Import mongoose
+const { Pool } = require('pg'); // Import pg for PostgreSQL
 require('dotenv').config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB Atlas
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log('Connected to MongoDB Atlas'))
+// Connect to PostgreSQL
+const pool = new Pool({
+  user: process.env.PGUSER, // PostgreSQL username
+  host: process.env.PGHOST, // PostgreSQL host
+  database: process.env.PGDATABASE, // PostgreSQL database name
+  password: process.env.PGPASSWORD, // PostgreSQL password
+  port: process.env.PGPORT, // PostgreSQL port
+});
+
+pool.connect()
+  .then(() => console.log('Connected to PostgreSQL')) // Log successful connection
   .catch((err) => {
-    console.error('Failed to connect to MongoDB Atlas', err);
+    console.error('Failed to connect to PostgreSQL', err); // Log connection error
     process.exit(1);
   });
 
@@ -41,20 +46,9 @@ app.use(limiter);
 // Serve static files from the dist directory
 app.use(express.static(path.join(__dirname, '../dist')));
 
-// Define Mongoose Schema and Model
-const formSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  location: { type: String },
-  message: { type: String, required: true },
-  submittedAt: { type: Date, default: Date.now },
-});
-
-const FormSubmission = mongoose.model('FormSubmission', formSchema);
-
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Handle form submission with validation and save to MongoDB
+// Handle form submission with validation and save to PostgreSQL
 app.post('/submit-form',
   [
     body('name').trim().notEmpty().withMessage('Name is required.'),
@@ -71,12 +65,13 @@ app.post('/submit-form',
     const { name, email, location, message } = req.body;
 
     try {
-      const newSubmission = new FormSubmission({ name, email, location, message });
-      await newSubmission.save();
-      console.log('Form data saved to MongoDB:', newSubmission);
+      const query = 'INSERT INTO form_submissions (name, email, location, message, submitted_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING *';
+      const values = [name, email, location, message];
+      const result = await pool.query(query, values); // Save form data to PostgreSQL
+      console.log('Form data saved to PostgreSQL:', result.rows[0]);
       res.status(200).json({ message: 'Form submitted successfully.' });
     } catch (err) {
-      console.error('Error saving form data to MongoDB:', err);
+      console.error('Error saving form data to PostgreSQL:', err);
       res.status(500).json({ message: 'Internal server error.' });
     }
   }
