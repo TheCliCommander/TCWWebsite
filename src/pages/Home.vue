@@ -69,4 +69,22 @@ export default defineComponent({
 .three-d-title:hover {
   transform: perspective(500px) rotateX(0deg) rotateY(0deg);
 }
+@media (max-width: 768px) {
+  .three-d-title {
+    font-size: 3em;
+    margin-top: 40px;
+  }
+  body {
+    font-size: 12px;
+    h1 {
+      font-size: 18px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    h3 {
+      font-size: 12px;
+    }
+  }
+}
 </style>

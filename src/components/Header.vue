@@ -159,12 +159,12 @@
     }
   
     .title {
-      font-size: 2.2em;
+      font-size: 1.5em;
     }
   
     .menu-button svg {
-      width: 80px;
-      height: 80px;
+      width: 40px;
+      height: 40px;
     }
   }
   </style>

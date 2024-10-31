@@ -112,6 +112,7 @@ export default defineComponent({
 @media (max-width: 600px) {
   .about {
       padding: 10px;
+      margin-top: 80px;
   }
 
   .about h1 {
