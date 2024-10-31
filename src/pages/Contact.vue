@@ -2,7 +2,7 @@
   <div class="contact">
     <!-- Added descriptive text above the Contact Us header -->
     <p>
-    <strong>There is a great power that lies just below the surface of working-class consciousness. It yearns to burst free and actualize itself. It is the greatest power known to humanity: the power of a united working class! This power has been repressed, abused, and confused for far too long. But it is still there, and it is waking up...</strong>
+      <strong>There is a great power that lies just below the surface of working-class consciousness. It yearns to burst free and actualize itself. It is the greatest power known to humanity: the power of a united working class! This power has been repressed, abused, and confused for far too long. But it is still there, and it is waking up...</strong>
     </p>
     <p>
       <strong>Are you tired of voting for the lesser evil and relying on self-interested political representatives to beg the state for your well-being? We at The Capital Worker certainly are. We don't see any signs of improvement coming—not ever. The only way we can fix this mess is together. The working class must unite and build solidarity networks that provide for one another's daily needs and create a Jefferson City we can truly be proud of. We know it's possible. History has proven it time and time again. Sign up below to feed your motivation for change and unleash our collective power!</strong>
@@ -24,8 +24,7 @@
       </div>
       <div class="form-group">
         <label for="message">Message:</label>
-        <textarea id="message" v-model="form.message" required placeholder="Tell us about yourself, why are you interested in signing up?">
-        </textarea>
+        <textarea id="message" v-model="form.message" required placeholder="Tell us about yourself, why are you interested in signing up?"></textarea>
       </div>
       <button type="submit">Send</button>
     </form>
@@ -42,7 +41,7 @@ export default defineComponent({
     const form = ref({
       name: '',
       email: '',
-      location: '', // Added location field
+      location: '',
       message: ''
     });
 
@@ -107,7 +106,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 .contact {
   padding: 20px;
   max-width: 600px;
@@ -132,10 +131,12 @@ input, textarea {
   margin: 0 auto;
   display: block;
 }
+
 input:focus, textarea:focus {
   border: 2px solid #8d9b83;
   outline: none; 
 }
+
 button {
   background-color: #C0392B;
   color: #FFFFFF;

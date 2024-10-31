@@ -7,7 +7,7 @@ const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const xss = require('xss-clean');
 const { Pool } = require('pg');
-const nodemailer = require('nodemailer'); // Added nodemailer
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
@@ -23,9 +23,9 @@ const pool = new Pool({
 });
 
 pool.connect()
-  .then(() => console.log('Connected to PostgreSQL')) // Log successful connection
+  .then(() => console.log('Connected to PostgreSQL'))
   .catch((err) => {
-    console.error('Failed to connect to PostgreSQL', err); // Log connection error
+    console.error('Failed to connect to PostgreSQL', err);
     process.exit(1);
   });
 
@@ -57,11 +57,11 @@ app.post('/submit-form',
     body('message').trim().notEmpty().withMessage('Message is required.').escape(),
   ],
   async (req, res) => {
-    console.log('Received form submission:', req.body); // Log received form data
+    console.log('Received form submission:', req.body);
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log('Validation errors:', errors.array()); // Log validation errors
+      console.log('Validation errors:', errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
 
@@ -71,7 +71,7 @@ app.post('/submit-form',
       const query = 'INSERT INTO form_submissions (name, email, location, message, submitted_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING *';
       const values = [name, email, location, message];
       const result = await pool.query(query, values);
-      console.log('Form data saved to PostgreSQL:', result.rows[0]); // Log successful save
+      console.log('Form data saved to PostgreSQL:', result.rows[0]);
 
       // Send email notification
       const transporter = nodemailer.createTransport({
@@ -99,7 +99,7 @@ app.post('/submit-form',
 
       res.status(200).json({ message: 'Form submitted successfully.' });
     } catch (err) {
-      console.error('Error saving form data to PostgreSQL:', err); // Log database error
+      console.error('Error saving form data to PostgreSQL:', err);
       res.status(500).json({ message: 'Internal server error.' });
     }
   }
