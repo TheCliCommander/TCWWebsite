@@ -9,7 +9,7 @@
     "helmet": "^8.0.0",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
-    "nodemailer": "^6.9.15",
+    "nodemailer": "^6.9.16",
     "swiper": "^11.1.14",
     "vue": "^3.2.0",
     "vue-router": "^4.4.5",
