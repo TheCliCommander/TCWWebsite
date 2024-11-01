@@ -41,7 +41,7 @@ app.post('/submit-form',
     res.send('Form submission received');
   }
 );
-
+app.set('trust proxy', 1);
 // Handle SPA routing
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));

@@ -20,10 +20,7 @@ const pool = new Pool({
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
-  
 });
-console.log('Database user:', process.env.PGUSER);
-console.log('Database host:', process.env.PGHOST);
 
 pool.connect()
   .then(() => console.log('Connected to PostgreSQL'))

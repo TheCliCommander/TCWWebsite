@@ -76,34 +76,28 @@ export default defineComponent({
           body: JSON.stringify(sanitizedForm)
         });
 
-        const result = await response.json();
+        
 
-        if (response.ok) {
-          alert(result.message);
-          // Reset form
-          form.value = {
-            name: '',
-            email: '',
-            location: '',
-            message: ''
-          };
-        } else {
-          // Handle validation errors from the server
-          const errorMessages = result.errors.map(err => err.msg).join('\n');
-          alert(`Error:\n${errorMessages}`);
-        }
-      } catch (error) {
-        console.error('Error submitting form:', error);
-        alert('There was an error submitting the form. Please try again later.');
-      }
-    };
-
-    return {
-      form,
-      submitForm
-    };
+   if (response.ok) {
+     const result = await response.json();
+     alert(result.message);
+     form.value = {
+       name: '',
+       email: '',
+       location: '',
+       message: ''
+     };
+   } else {
+     const errorText = await response.text();
+     console.error('Error submitting form:', errorText);
+     alert('There was an error submitting the form. Please try again later.');
+   }
+    
+  } catch (error) {
+    console.error('Error:', error);
+    alert('There was an error submitting form. Please try again later.');
   }
-});
+}}});
 </script>
 
 <style>
