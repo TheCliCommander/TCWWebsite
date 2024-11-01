@@ -63,7 +63,7 @@ a:hover {
         padding: 10px; /* smaller container for smaller screens */
     }
     h1 {
-        font-size: 24px; /* smaller font for smaller screens */
+        /* smaller font for smaller screens */
         margin-top: 15px;
     }
     .form {

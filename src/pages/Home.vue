@@ -71,19 +71,14 @@ export default defineComponent({
 }
 @media (max-width: 768px) {
   .three-d-title {
-    font-size: 3em;
+    font-size: 2em;
     margin-top: 40px;
   }
   body {
     font-size: 12px;
-    h1 {
-      font-size: 18px;
-    }
-    h2 {
-      font-size: 16px;
-    }
+    
     h3 {
-      font-size: 12px;
+      font-size: 14px;
     }
   }
 }
